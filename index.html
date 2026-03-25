@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProSport Gear</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+body {
+    margin:0;
+    font-family:Arial;
+    background:#0a0a0a;
+    color:white;
+}
+
+.navbar {
+    display:flex;
+    justify-content:space-between;
+    padding:15px 30px;
+    background:#111;
+}
+
+.logo {font-size:22px;font-weight:bold;color:#00d4ff;}
+
+.product-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:40px;
+}
+
+.product-card {
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.product-price {color:#00ff88;font-size:18px;}
+
+button {
+    padding:10px 20px;
+    border:none;
+    background:#00d4ff;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.cart {
+    position:fixed;
+    right:-300px;
+    top:0;
+    width:300px;
+    height:100%;
+    background:#111;
+    padding:20px;
+    transition:0.3s;
+}
+
+.cart.open {right:0;}
+
+.cart-icon {
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo">ProSport Gear</div>
+    <div class="cart-icon" onclick="openCart()">
+        🛒 <span id="cartCount">0</span>
+    </div>
+</div>
+
+<h2 style="text-align:center;margin-top:20px;">Products</h2>
+
+<div class="product-grid">
+
+<div class="product-card">
+<h3>Football</h3>
+<p class="product-price">₹999</p>
+<button onclick="addToCart('Football',999)">Add</button>
+</div>
+
+<div class="product-card">
+<h3>Cricket Bat</h3>
+<p class="product-price">₹1999</p>
+<button onclick="addToCart('Cricket Bat',1999)">Add</button>
+</div>
+
+<div class="product-card">
+<h3>Basketball</h3>
+<p class="product-price">₹1299</p>
+<button onclick="addToCart('Basketball',1299)">Add</button>
+</div>
+
+<div class="product-card">
+<h3>Running Shoes</h3>
+<p class="product-price">₹2499</p>
+<button onclick="addToCart('Shoes',2499)">Add</button>
+</div>
+
+</div>
+
+<!-- CART -->
+<div class="cart" id="cart">
+<h3>Cart</h3>
+<div id="cartItems"></div>
+<br>
+<button onclick="closeCart()">Close</button>
+</div>
+
+<script>
+let cart = [];
+
+function addToCart(name, price) {
+    cart.push({name, price});
+    document.getElementById("cartCount").innerText = cart.length;
+    displayCart();
+}
+
+function displayCart() {
+    let items = document.getElementById("cartItems");
+    items.innerHTML = "";
+    let total = 0;
+
+    cart.forEach(item => {
+        total += item.price;
+        items.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
+    });
+
+    items.innerHTML += `<hr><b>Total: ₹${total}</b>`;
+}
+
+function openCart() {
+    document.getElementById("cart").classList.add("open");
+}
+
+function closeCart() {
+    document.getElementById("cart").classList.remove("open");
+}
+</script>
+
+</body>
+</html>
